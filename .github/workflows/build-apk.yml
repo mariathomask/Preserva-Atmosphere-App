@@ -1,0 +1,23 @@
+
+name: Build Preserva APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download repository files
+        uses: actions/checkout@v4
+
+      - name: Check project contents
+        run: |
+          echo "Files in repository:"
+          find . -maxdepth 5 -type f | sort | head -200
+          echo "Checking for Android Gradle project..."
+          if [ -f settings.gradle ] || [ -f settings.gradle.kts ]; then
+            echo "Android Gradle settings file found."
+          else
+            echo "No Android Gradle project found at repository root."
+          fi
